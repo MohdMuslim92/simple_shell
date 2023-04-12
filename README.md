@@ -1,4 +1,4 @@
-# simple shell
+# Simple Shell
 
 This is a simple shell program written in C programming language. It supports basic shell functionality such as executing commands and managing processes. This project is contributed by Mohammed Saeed and Mojtaba Babiker.
 
@@ -6,17 +6,17 @@ This is a simple shell program written in C programming language. It supports ba
 To use the shell program, you can clone the repository to your local machine:
 
 ```console
-git clone https://github.com/yourusername/simple-shell.git   
+git clone https://github.com/MohdMuslim92/simple_shell.git   
 ```
 Then compile the program using GCC compiler:
 ```console
-gcc -o simple-shell shell.c   
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh   
 ```
 Finally, run the program:
 
 ```console
-./simple-shell   
-```
+./hsh   
+$```
 # Features
 * Supports executing commands with arguments
 * Supports background processes
@@ -34,11 +34,6 @@ This will execute the ls command and list the files in the current directory.
 $ ls -l /home/user   
 ```
 This will execute the ls command with the -l option and list the files in the /home/user directory.
-
-```console
-$ sleep 5 &   
-```
-This will execute the sleep command in the background for 5 seconds.
 
 ```console
 $ cd /home/user   
