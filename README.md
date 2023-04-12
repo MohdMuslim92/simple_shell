@@ -7,17 +7,16 @@ To use the shell program, you can clone the repository to your local machine:
 
 ```console
 git clone https://github.com/yourusername/simple-shell.git   
-
+```
 Then compile the program using GCC compiler:
 ```console
 gcc -o simple-shell shell.c   
-
+```
 Finally, run the program:
 
-```console   
-
+```console
 ./simple-shell   
-
+```
 # Features
 * Supports executing commands with arguments
 * Supports background processes
@@ -28,22 +27,22 @@ Here are some examples of how to use the shell program:
 
 ```console
 $ ls   
-
+```
 This will execute the ls command and list the files in the current directory.
 
 ```console
 $ ls -l /home/user   
-
+```
 This will execute the ls command with the -l option and list the files in the /home/user directory.
 
 ```console
 $ sleep 5 &   
-
+```
 This will execute the sleep command in the background for 5 seconds.
 
 ```console
 $ cd /home/user   
-
+```
 This will change the current directory to /home/user.
 
 # Contributions
