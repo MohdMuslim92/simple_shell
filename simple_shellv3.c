@@ -15,7 +15,7 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 
 	char *line = NULL, *exefile = NULL;
 	size_t arg_len = 0;
-	int i = 0, j = 0, pid = 0, status = 0, errnom = 1, new_line = 0;
+	int i = 0, j = 0, pid = 0, status = 0, new_line = 0;
 	unsigned int len = 0;
 
 	do {
@@ -64,10 +64,8 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 		exefile = get_path2(exefile);/*, env);*/
 		if (exefile == NULL)
 		{
-			dprintf(STDOUT_FILENO, "%s: %d: %s: ",
-				argv[0], errnom, args[0]);
-			dprintf(STDOUT_FILENO, "not found\n");
-			errnom++;
+			dprintf(STDOUT_FILENO, "%s: ", argv[0]);
+			perror("");
 			free(line);
 			for (i = j ; args[i] ; i++)
 				free(args[i]);
