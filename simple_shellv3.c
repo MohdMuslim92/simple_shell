@@ -15,17 +15,21 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 
 	char *line = NULL, *exefile = NULL;
 	size_t arg_len = 0;
-	int i = 0, pid = 0, status = 0;
+	int i = 0, j = 0, pid = 0, status = 0, errnom = 1, new_line = 0;
 	unsigned int len = 0;
 
 	do {
-		i = 0, arg_len = 0;
+		i = 0, j = 0, arg_len = 0, new_line = 0;
 		line = NULL;
 		if (isatty(0))
+		{
+			new_line = 1;
 			printf("$: ");
+		}
 		if (getline(&line, &arg_len, stdin) == -1)
 		{
-			printf("\n");
+			if (new_line)
+				printf("\n");
 			free(line);
 			exit(EXIT_SUCCESS);
 		}
@@ -42,8 +46,10 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 			perror("");
 			continue;
 		}
-		if (_strcmp(exefile, "exit") == 0)
-			break;
+/*		if (_strcmp(exefile, "exit") == 0)*/
+/*			break;*/
+		if (exefile[0] == '/')
+			j = 1;
 		args[0] = exefile;
 		while (args[i] != NULL)
 		{
@@ -54,14 +60,16 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 			}
 			args[++i] = _strtok(NULL, ' ', &len);
 		}
-		exefile = get_path(exefile, env);
+		exefile = get_path2(exefile);/*, env);*/
 		if (exefile == NULL)
 		{
+			dprintf(STDOUT_FILENO, "%s: %d: %s: ",
+				argv[0], errnom, args[0]);
+			dprintf(STDOUT_FILENO, "not found\n");
+			errnom++;
 			free(line);
-			for (i = 0 ; args[i] ; i++)
+			for (i = j ; args[i] ; i++)
 				free(args[i]);
-			dprintf(STDOUT_FILENO, "%s: ", argv[0]);
-			perror("");
 			continue;
 		}
 		pid = fork();
@@ -71,15 +79,14 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 			{
 				free(line);
 				free(exefile);
-				for (i = 0 ; args[i] ; i++)
+				for (i = j ; args[i] ; i++)
 					free(args[i]);
-				printf("here\n");
 				continue;
 			}
 		}
 		i = wait(&status);
 		free(exefile);
-		for (i = 0 ; args[i] ; i++)
+		for (i = j ; args[i] ; i++)
 			free(args[i]);
 		free(line);
 	} while (1);
