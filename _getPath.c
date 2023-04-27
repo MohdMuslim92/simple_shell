@@ -16,7 +16,11 @@ char *get_path(char *exefile, char **environ)
 
 	paths = _getenv("PATH", environ);
 	if (exefile[0] == '/')
-		return (exefile);
+	{
+		if (!access(exefile, F_OK | X_OK))
+			return (exefile);
+		return (NULL);
+	}
 	temp = _strtok(paths, ':', &len);
 	while (temp != NULL)
 	{

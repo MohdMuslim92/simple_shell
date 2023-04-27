@@ -46,6 +46,7 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 			perror("");
 			continue;
 		}
+
 /*		if (_strcmp(exefile, "exit") == 0)*/
 /*			break;*/
 		if (exefile[0] == '/')
