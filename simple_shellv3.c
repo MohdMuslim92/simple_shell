@@ -24,7 +24,7 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 		if (isatty(0))
 		{
 			new_line = 1;
-			printf("$: ");
+			printf("#cisfun$ ");
 		}
 		if (getline(&line, &arg_len, stdin) == -1)
 		{
