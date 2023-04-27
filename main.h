@@ -17,5 +17,5 @@
 char *get_path(char *exefile, char **environ);
 char *_getenv(const char *name, char **environ);
 char *_strtok(char *str, char delim, unsigned int *len);
-
+char *get_path2(char *exefile);
 #endif
