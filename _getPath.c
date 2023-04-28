@@ -13,13 +13,13 @@ char *get_path(char *exefile)
 	int f_state = 0;
 	unsigned int len = 0;
 
-	paths = _getenv("PATH");
 	if (exefile[0] == '/')
 	{
 		if (!access(exefile, F_OK | X_OK))
 			return (exefile);
 		return (NULL);
 	}
+	paths = _getenv("PATH");
 	if (paths == NULL)
 		return (NULL);
 	temp = _strtok(paths, ':', &len);
