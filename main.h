@@ -18,4 +18,6 @@ char *get_path(char *exefile, char **environ);
 char *_getenv(const char *name, char **environ);
 char *_strtok(char *str, char delim, unsigned int *len);
 char *get_path2(char *exefile);
+int _strlen(char *s);
+char *_strpbrk(char *s, char *accept);
 #endif
