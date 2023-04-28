@@ -1,0 +1,85 @@
+#include "main.h"
+/**
+ * _strtok - tokenizing the given string.
+ * @str: the string to tokenize.
+ * @delim: the delimiter to tokenizing upon.
+ * @len: set the len of the token into it
+ * Return: Dynamiclly allocated pointer to null-terminated token (string),
+ *         or NULL if no delim found
+ */
+char *_strtok(char *str, char delim, unsigned int *len)
+{
+	static char *s;
+	char *temp, *token;
+	char argv[2][11] = {"my prompt", "arguments"};
+	unsigned int i = 0;
+	*len = 0; /*reset the len variable to zero*/
+	if (str != NULL)/* first call for _strtok */
+	{
+		s = strdup(str);
+		if (s == NULL)
+		{
+			dprintf(STDOUT_FILENO, "%s: ", "MY PROMPT");
+			perror("ENOMEM");
+			return (NULL);
+		}
+	}
+	/*printf("sd=>..%s..\n", s);*/
+	if (*s == '\n' || *s == '\0')/* reach the last element in the array */
+		return (NULL);
+	temp = s;
+	while (*temp == delim)/* iterates until the first char isn't a delim*/
+	{
+		/*reach the end of str and no token found*/
+		if (*temp == '\n' || *temp == '\0')
+			return (NULL);
+		temp++;
+	}
+	s = temp;
+	while (*s != delim && *s != '\n' && *s != '\0')
+	{
+		*len = *len + 1;
+		s++;
+	}
+	if (delim != '"' && delim != '\'')
+	{
+		/*if (*(s + 1) != delim)
+			*s = '\0';
+		token = strdup(temp);
+		if (token == NULL)
+		{
+			dprintf(STDOUT_FILENO, "%s: ", argv[0]);
+			perror("ENOMEM");
+			return (NULL);
+		}*/
+		token = malloc(1 + sizeof(char) * *len);
+		if (token == NULL)
+		{
+			dprintf(STDOUT_FILENO, "%s: ", argv[0]);
+			perror("ENOMEM");
+			return (NULL);
+		}
+		for (i = 0 ; i < *len ; i++)
+		{
+			token[i] = temp[i];
+			/*printf("token[%d]: %c\n", i, token[i]);*/
+		}
+		token[*len] = '\0';
+
+	}
+	else if (delim == '"' || delim == '\'')
+	{
+		token = malloc(1 + sizeof(char) * *len);
+		if (token == NULL)
+		{
+			dprintf(STDOUT_FILENO, "%s: ", argv[0]);
+			perror("ENOMEM");
+			return (NULL);
+		}
+		for (i = 0 ; i < *len ; i++)
+			token[i] = temp[i];
+		token[*len] = '\0';
+	}
+	/*printf("sd=>..%s..\n", s);*/
+	return (token);
+}
