@@ -37,7 +37,7 @@ char *_strtok(char *str, char delim, unsigned int *len)
 		s++;
 	}
 
-	token = malloc(sizeof(char) * *len);
+	token = malloc(sizeof(char) * (*len + 1));
 	if (token == NULL)
 	{
 		perror_and_exit("MY PROMPT", "ENOMEM");
@@ -74,6 +74,5 @@ void copy_token(char *temp, char *token, unsigned int len)
 	}
 	if (len > 0)
 		token[len] = '\0';
-	else
-		token = NULL;
+	token = NULL;
 }
