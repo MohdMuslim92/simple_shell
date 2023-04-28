@@ -1,6 +1,7 @@
 #include "main.h"
 
 int _strcmp(char *str1, char *str2);
+int _empty(char *buffer);
 /**
  * main - entry point for the simple shell
  * @argc: arguments number
@@ -32,7 +33,7 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 			free(line);
 			exit(EXIT_SUCCESS);
 		}
-		if (line[0] == '\n')
+		if (_empty(line))
 		{
 			free(line);
 			continue;
@@ -51,15 +52,9 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 		if (exefile[0] == '/')
 			j = 1;
 		args[0] = exefile;
+		i = 0;
 		while (args[i] != NULL)
-		{
-			if (args[i][0] == '\0')
-			{
-				args[i] = NULL;
-				break;
-			}
-			args[++i] = _strtok(NULL, ' ', &len);
-		}
+			args[i] = _strtok(NULL, ' ', &len);
 		exefile = get_path(exefile, env);
 		if (exefile == NULL)
 		{
@@ -109,4 +104,23 @@ int _strcmp(char *str1, char *str2)
 		if (str1[i] != str2[i])
 			return (-1);
 	return (0);
+}
+
+/**
+ * _empty - check if the the buffer is all spaces "empty buffer"
+ * @buffer - pointer to the buffer to check
+ * Return: 1 if empty, 0 other-wise
+ */
+int _empty(char *buffer)
+{
+	int i = 0;
+
+	if (buffer == NULL)
+		return (1);
+	for (i = 0 ; buffer[i] != '\n' && buffer[i] != '\0' ; i++)
+	{
+		if (buffer[i] != ' ')
+			return (0);
+	}
+	return (1);
 }
