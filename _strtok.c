@@ -25,11 +25,10 @@ char *_strtok(char *str, char delim, unsigned int *len)
 
 	temp = s;
 	while (*temp == delim)/* iterates until the first char isn't a delim*/
-	{       /*reach end of str and no token found*/
-		if (*temp == '\n' || *temp == '\0')
-			return (NULL);
 		temp++;
-	}
+	/*reach end of str and no token found*/
+	if (*temp == '\n' || *temp == '\0')
+		return (NULL);
 	s = temp;
 	while (*s != delim && *s != '\n' && *s != '\0')
 	{
