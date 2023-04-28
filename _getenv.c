@@ -36,7 +36,7 @@ char *_getenv(const char *name, char **environ)
 		if (match)
 		{
 			/*return the first '=' in the matched env*/
-			value = strpbrk(environ[i], "=");
+			value = _strpbrk(environ[i], "=");
 			if (value == NULL)
 				return (NULL);
 			/*++ because the returned pointer is including = sign*/
