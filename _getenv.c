@@ -3,10 +3,9 @@
 /**
  * _getenv - search for name in env and return its value
  * @name: pointer to the variable name
- * @environ: environment variables pointer
  * Return: pointer to name's value, or NULL if there no variable in name name
  */
-char *_getenv(const char *name, char **environ)
+char *_getenv(const char *name)
 {
 	char *value;
 	int i, match;

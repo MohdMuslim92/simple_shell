@@ -6,10 +6,9 @@ int _empty(char *buffer);
  * main - entry point for the simple shell
  * @argc: arguments number
  * @argv: list of program arguments
- * @env: list of program environment variables
  * Return: 0 in success -1 otherwise
  */
-int main(__attribute__((unused))int argc, char **argv, char **env)
+int main(__attribute__((unused))int argc, char **argv)
 {
 	char *args[1024];
 
@@ -53,9 +52,9 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 			j = 1;
 		args[0] = exefile;
 		i = 0;
-		while (args[i] != NULL)
+		while (args[i++] != NULL)
 			args[i] = _strtok(NULL, ' ', &len);
-		exefile = get_path(exefile, env);
+		exefile = get_path(exefile);
 		if (exefile == NULL)
 		{
 			write(1, (void *)argv[0], _strlen(argv[0]));
@@ -69,7 +68,7 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execve(exefile, args, env) < 0)
+			if (execve(exefile, args, environ) < 0)
 			{
 				free(line);
 				free(exefile);
@@ -108,7 +107,7 @@ int _strcmp(char *str1, char *str2)
 
 /**
  * _empty - check if the the buffer is all spaces "empty buffer"
- * @buffer - pointer to the buffer to check
+ * @buffer: pointer to the buffer to check
  * Return: 1 if empty, 0 other-wise
  */
 int _empty(char *buffer)

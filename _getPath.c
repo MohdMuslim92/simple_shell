@@ -4,23 +4,24 @@ char *creat_path(char *path, unsigned int len, char *exefile);
 /**
  * get_path - get the path of the executable file
  * @exefile: the name of the executable file
- * @environ: environment variables pointer
  * Return: the absolute path of exefile, or NULL if the name of the file
  *         is not in the PATH environment variable, and the ERROR_NO set
  */
-char *get_path(char *exefile, char **environ)
+char *get_path(char *exefile)
 {
 	char *paths = NULL, *temp = NULL, *exe_path = NULL;
 	int f_state = 0;
 	unsigned int len = 0;
 
-	paths = _getenv("PATH", environ);
+	paths = _getenv("PATH");
 	if (exefile[0] == '/')
 	{
 		if (!access(exefile, F_OK | X_OK))
 			return (exefile);
 		return (NULL);
 	}
+	if (paths == NULL)
+		return (NULL);
 	temp = _strtok(paths, ':', &len);
 	while (temp != NULL)
 	{
