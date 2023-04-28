@@ -57,7 +57,7 @@ char *creat_path(char *path, unsigned int len, char *exefile)
 	int i, j;
 
 	exe_path = malloc(sizeof(char) *
-			  (len + strlen(exefile) + 2));
+			  (len + _strlen(exefile) + 2));
 	if (exe_path == NULL)
 		return (NULL);
 	for (i = 0 ; path[i] ; i++)
