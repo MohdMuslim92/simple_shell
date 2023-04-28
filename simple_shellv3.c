@@ -1,6 +1,5 @@
 #include "main.h"
 
-long int get_arg_max(char **argv, char **env);
 int _strcmp(char *str1, char *str2);
 /**
  * main - entry point for the simple shell
@@ -24,16 +23,16 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 		if (isatty(0))
 		{
 			new_line = 1;
-			printf("$: ");
+			write(1, "$: ", 3);
 		}
 		if (getline(&line, &arg_len, stdin) == -1)
 		{
 			if (new_line)
-				printf("\n");
+				write(1, "\n", 1);
 			free(line);
 			exit(EXIT_SUCCESS);
 		}
-		if (line[0] == '\n')/*strcmp(line, "\n") == 0)*/
+		if (line[0] == '\n')
 		{
 			free(line);
 			continue;
@@ -42,13 +41,13 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 		if (exefile == NULL)
 		{
 			free(line);
-			dprintf(STDOUT_FILENO, "%s: ", argv[0]);
+			write(1, (void *)argv[0], _strlen(argv[0]));
+			write(1, ": ", 2);
 			perror("");
 			continue;
 		}
-
-/*		if (_strcmp(exefile, "exit") == 0)*/
-/*			break;*/
+		if (_strcmp(exefile, "exit") == 0)
+			break;
 		if (exefile[0] == '/')
 			j = 1;
 		args[0] = exefile;
@@ -61,10 +60,11 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 			}
 			args[++i] = _strtok(NULL, ' ', &len);
 		}
-		exefile = get_path2(exefile);/*, env);*/
+		exefile = get_path(exefile, env);
 		if (exefile == NULL)
 		{
-			dprintf(STDOUT_FILENO, "%s: ", argv[0]);
+			write(1, (void *)argv[0], _strlen(argv[0]));
+			write(1, ": ", 2);
 			perror("");
 			free(line);
 			for (i = j ; args[i] ; i++)
@@ -80,7 +80,7 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 				free(exefile);
 				for (i = j ; args[i] ; i++)
 					free(args[i]);
-				continue;
+				exit(EXIT_FAILURE);
 			}
 		}
 		i = wait(&status);
@@ -95,30 +95,6 @@ int main(__attribute__((unused))int argc, char **argv, char **env)
 }
 
 /**
- * get_arg_max - calculate maximum allowed number of args
- * @argv: array of program's arguments
- * @env: array of program's environment variables
- * Return: maximum allowed number of arguments
- */
-
-long int get_arg_max(char **argv, char **env)
-{
-	unsigned int envc = 0, argc = 0, i = 0;
-
-	while (env[i])
-	{
-		envc += strlen(env[i]);
-		i++;
-	}
-	i = 0;
-	while (argv[i])
-	{
-		argc += strlen(argv[i]);
-		i++;
-	}
-	return (sysconf(SCHAR_MAX) - (long int)envc - 2048l);
-}
-/**
  * _strcmp - compiare two string
  * @str1: first string
  * @str2: second string
@@ -128,7 +104,7 @@ int _strcmp(char *str1, char *str2)
 {
 	unsigned int len2, i;
 
-	len2 = strlen(str2);
+	len2 = _strlen(str2);
 	for (i = 0 ; i < len2 ; i++)
 		if (str1[i] != str2[i])
 			return (-1);
