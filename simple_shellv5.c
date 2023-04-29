@@ -34,7 +34,7 @@ int main(__attribute__((unused))int argc, char **argv)
 			if (new_line)
 				write(1, "\n", 1);
 			free(line);
-			exit(status);
+			exit(r_val);
 		}
 		if (_empty(line))
 		{
@@ -70,7 +70,7 @@ int main(__attribute__((unused))int argc, char **argv)
 					_perror(argv[0], err_nom, "exit");
 					print_num(-1 * status);
 					write(2, "\n", 1);
-					status = 2;
+					r_val = 2;
 					continue;
 				}
 				/*free(exefile);*/
@@ -105,14 +105,12 @@ int main(__attribute__((unused))int argc, char **argv)
 		r_val = wait(&status);
 		if (WIFEXITED(status))
 			r_val = WEXITSTATUS(status);
-else
-			r_val = 0;
 		free(exefile);
 		for (i = j ; args[i] ; i++)
 			free(args[i]);
 		free(line);
 	} while (1);
-	return (0);
+	return (r_val);
 }
 
 /**

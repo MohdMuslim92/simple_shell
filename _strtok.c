@@ -1,6 +1,5 @@
 #include "main.h"
 
-void perror_and_exit(char *prompt, char *error);
 void copy_token(char *temp, char *token, unsigned int len);
 
 /**
@@ -39,26 +38,14 @@ char *_strtok(char *str, char delim, unsigned int *len)
 	token = malloc(sizeof(char) * (*len + 1));
 	if (token == NULL)
 	{
-		perror_and_exit("MY PROMPT", "ENOMEM");
+		return (NULL);
 	}
 	copy_token(temp, token, *len);
 	return (token);
 }
 
 /**
- * perror_and_exit - print an error message to stderr and exit the program.
- * @prompt: the prompt to print before the error message.
- * @error: the error message to print.
- */
-void perror_and_exit(char *prompt, char *error)
-{
-	dprintf(STDOUT_FILENO, "%s: ", prompt);
-	perror(error);
-	exit(EXIT_FAILURE);
-}
-
-/**
- * copy_token - copy the characters from temp into token.
+ *copy_token - copy the characters from temp into token.
  * @temp: the source string to copy from.
  * @token: the destination string to copy into.
  * @len: the number of characters to copy.
