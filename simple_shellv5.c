@@ -105,7 +105,7 @@ int main(__attribute__((unused))int argc, char **argv)
 		r_val = wait(&status);
 		if (WIFEXITED(status))
 			r_val = WEXITSTATUS(status);
-		else
+else
 			r_val = 0;
 		free(exefile);
 		for (i = j ; args[i] ; i++)
