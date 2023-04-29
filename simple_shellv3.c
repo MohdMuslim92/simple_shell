@@ -33,7 +33,7 @@ int main(__attribute__((unused))int argc, char **argv)
 			if (new_line)
 				write(1, "\n", 1);
 			free(line);
-			exit(EXIT_SUCCESS);
+			exit(status);
 		}
 		if (_empty(line))
 		{
@@ -51,18 +51,32 @@ int main(__attribute__((unused))int argc, char **argv)
 		}
 		if (exefile[0] == '/' || exefile[0] == '.')
 			j = 1;
-		if (_strcmp(exefile, "exit") == 0)
-		{
-			free(exefile);
-			free(line);
-			if (status == 0)
-				exit(0);
-			exit(2);
-		}
 		args[0] = exefile;
 		i = 0;
 		while (args[i++] != NULL)
 			args[i] = _strtok(NULL, ' ', &len);
+		if (_strcmp(exefile, "exit") == 0)
+		{
+			free(line);
+			if (args[1])
+			{
+				status = _atoi(args[1]);
+				for (i = j ; args[i] ; i++)
+					free(args[i]);
+				if  (status < 0)
+				{
+					_perror(argv[0], err_nom, "exit");
+					print_num(-1 * status);
+					write(2, "\n", 1);
+					status = 2;
+					continue;
+				}
+				exit(status & 0xff);
+			}
+			if (status == 0)
+				exit(0);
+			exit(2);
+		}
 		exefile = get_path(exefile);
 		if (exefile == NULL)
 		{
@@ -144,7 +158,12 @@ void _perror(char *prog_name, int err_nom, char *command)
 	print_num(err_nom);
 	write(2, ": ", 2);
 	write(2, command, _strlen(command));
-	write(2, ": not found\n", 12);
+	if (_strcmp(command, "exit") == 0)
+	{
+		write(2, ": illigal number: -", 20);
+	}
+	else
+		write(2, ": not found\n", 12);
 }
 
 /**
