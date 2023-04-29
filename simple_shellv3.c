@@ -63,6 +63,7 @@ int main(__attribute__((unused))int argc, char **argv)
 				status = _atoi(args[1]);
 				for (i = j ; args[i] ; i++)
 					free(args[i]);
+
 				if  (status < 0)
 				{
 					_perror(argv[0], err_nom, "exit");
