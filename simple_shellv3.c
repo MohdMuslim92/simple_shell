@@ -55,7 +55,7 @@ int main(__attribute__((unused))int argc, char **argv)
 		{
 			free(exefile);
 			free(line);
-			if (len != 0)
+			if (status == 0)
 				exit(0);
 			exit(2);
 		}
