@@ -62,12 +62,23 @@ int main(__attribute__((unused))int argc, char **argv)
 			free(line);
 			if (args[1])
 			{
+				if (args[1][0] < 48 || args[1][0] > 57)
+				{
+					_perror(argv[0], err_nom, "exit");
+					write(2, args[1], _strlen(args[1]));
+					write(2, "\n", 1);
+					r_val = 2;
+					for (i = j ; args[i] ; i++)
+						free(args[i]);
+					continue;
+				}
 				status = _atoi(args[1]);
 				for (i = j ; args[i] ; i++)
 					free(args[i]);
 				if  (status < 0)
 				{
 					_perror(argv[0], err_nom, "exit");
+					write(2, "-", 1);
 					print_num(-1 * status);
 					write(2, "\n", 1);
 					r_val = 2;
@@ -165,7 +176,7 @@ void _perror(char *prog_name, int err_nom, char *command)
 	write(2, command, _strlen(command));
 	if (_strcmp(command, "exit") == 0)
 	{
-		write(2, ": illigal number: -", 20);
+		write(2, ": illigal number", 20);
 	}
 	else
 		write(2, ": not found\n", 12);
