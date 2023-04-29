@@ -51,18 +51,24 @@ int main(__attribute__((unused))int argc, char **argv)
 		}
 		if (exefile[0] == '/' || exefile[0] == '.')
 			j = 1;
-		if (_strcmp(exefile, "exit") == 0)
-		{
-			free(exefile);
-			free(line);
-			if (status == 0)
-				exit(0);
-			exit(2);
-		}
 		args[0] = exefile;
 		i = 0;
 		while (args[i++] != NULL)
 			args[i] = _strtok(NULL, ' ', &len);
+		if (_strcmp(exefile, "exit") == 0)
+		{
+			free(line);
+			if (args[1])
+			{
+				status = _atoi(args[1]);
+				for (i = j ; args[i] ; i++)
+					free(args[i]);
+				exit(status);
+			}
+			if (status == 0)
+				exit(0);
+			exit(2);
+		}
 		exefile = get_path(exefile);
 		if (exefile == NULL)
 		{
