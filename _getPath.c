@@ -13,7 +13,7 @@ char *get_path(char *exefile)
 	int f_state = 0;
 	unsigned int len = 0;
 
-	if (exefile[0] == '/')
+	if (exefile[0] == '/' || exefile[0] == '.')
 	{
 		if (!access(exefile, F_OK | X_OK))
 			return (exefile);
