@@ -11,12 +11,9 @@ char *_getenv(const char *name)
 	int i, match;
 	unsigned int len, j;
 
-	if (name == NULL)
-	{
-		dprintf(STDOUT_FILENO, "%s: ", "MY PROMPT");
-		perror("EINVAL");
+	if (environ == NULL || name == NULL)
 		return (NULL);
-	}
+
 	len = strlen(name);
 	/*loop over all the environment variables searching for the name*/
 	i = 0;
@@ -32,7 +29,7 @@ char *_getenv(const char *name)
 			}
 			match = 1;
 		}
-		if (match)
+		if (match && environ[i][j] == '=')
 		{
 			/*return the first '=' in the matched env*/
 			value = _strpbrk(environ[i], "=");
@@ -43,7 +40,5 @@ char *_getenv(const char *name)
 		}
 		i++;
 	}
-	dprintf(STDOUT_FILENO, "%s: ", "MY PROMPT");
-	perror("EINVAL");
 	return (NULL);
 }
