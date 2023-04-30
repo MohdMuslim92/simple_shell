@@ -90,6 +90,18 @@ int main(__attribute__((unused))int argc, char **argv)
 			free(exefile);
 			exit(r_val);
 		}
+		else if (_strcmp(exefile, "env") == 0)
+		{
+			r_val = _env();
+			free(line);
+			free(exefile);
+			j = 1;
+			for (i = j ; args[i] ; i++)
+				free(args[i]);
+			if (r_val)
+				_perror(argv[0], err_nom, "env");
+			continue;
+		}
 		exefile = get_path(exefile);
 		if (exefile == NULL)
 		{
