@@ -187,9 +187,7 @@ void _perror(char *prog_name, int err_nom, char *command)
 	write(2, ": ", 2);
 	write(2, command, _strlen(command));
 	if (_strcmp(command, "exit") == 0)
-	{
-		write(2, ": illigal number", 20);
-	}
+		write(2, ": illigal number: ", 18);
 	else
 		write(2, ": not found\n", 12);
 }
