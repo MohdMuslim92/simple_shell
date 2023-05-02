@@ -2,7 +2,7 @@
 
 /**
  * _env - a builtin function that ientical to the shell env() function
- * Return: 0- in success non-zero othe wise
+ * Return: 0- in success non-zero otherwise
  */
 
 int _env(void)
